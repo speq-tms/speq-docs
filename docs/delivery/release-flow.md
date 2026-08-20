@@ -121,6 +121,20 @@ git push origin origin/main:refs/heads/<RC>
 
 ---
 
+## Отчёт по RC
+
+Состав релиз-кандидата не пишется руками — он выводится из состояния GitHub:
+
+```bash
+scripts/rc-report.sh            # текущий открытый RC
+scripts/rc-report.sh v1.1.0     # конкретный RC
+scripts/rc-report.sh v1.1.0 -   # в stdout, без записи файла
+```
+
+Отчёт попадает в `docs/delivery/rc/<RC>.md` и содержит: состав по issue майлстоуна, фактически смерженные в RC PR по каждому репозиторию, порядок выката и релизные гейты. Перегенерируйте его после каждого смерженного PR и перед финальным мержем RC в `main`.
+
+Порядок выката — цепочка зависимостей, а не предпочтение: `speq-contracts` → `speq-cli` → `speq-examples` → `speq-github-runner` → `homebrew-tap` → `speq-docs` → `speq-tms.github.io`. `homebrew-tap` нельзя мержить раньше, чем опубликован артефакт релиза `speq-cli`.
+
 ## Acceptance gates
 
 Перед мержем RC в `main`:

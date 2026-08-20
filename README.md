@@ -13,6 +13,7 @@ The focus of this repository is `speq-cli`, the single execution engine of the e
 | [docs/product/](docs/product/) | Vision, OSS/Pro boundary, release scope |
 | [docs/architecture/](docs/architecture/) | Target architecture and CLI refactoring plan |
 | [docs/delivery/](docs/delivery/) | Release flow, publishing playbook, GitHub Pages |
+| [docs/delivery/rc/](docs/delivery/rc/) | Generated release-candidate reports — scope, changes, rollout order |
 | [archive/](archive/) | Superseded documents, kept for historical context only |
 
 ## Start here
