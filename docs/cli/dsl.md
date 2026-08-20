@@ -323,10 +323,14 @@ assert:
   schema assertion requires 'ref' or 'inline' in <файл> assert[N]
   ```
 
-> **Поле `value` не работает.** Парсер его принимает, но раннер читает только `expected`. Ассерт с
-> `value: 200` и без `expected` сравнивает значение с `null` и падает с сообщением вида
-> `expected null, got 1`. Всегда пишите `expected`.
-> Отслеживается в [speq-tms/speq-docs#28](https://github.com/speq-tms/speq-docs/issues/28).
+> **`value` — синоним `expected`.** Как `markers` для `tags`. Писать оба в одном ассерте нельзя, это
+> ошибка разбора:
+>
+> ```text
+> YAML parse error in <файл>: steps[0].assert[0]: duplicate field `expected` at line N column M
+> ```
+>
+> Строка и колонка указывают на `value:`. Канонический вариант — `expected`.
 
 > **В ассертах подстановка переменных не выполняется.** `expected: "{{postId}}"` сравнится с литеральной
 > строкой `{{postId}}`. Переменные раскрываются только в `url`, значениях `headers`, строках `body` и
@@ -719,9 +723,6 @@ steps: [...]
 `returns`.
 
 **Вложенный `use` не поддерживается** — ни в файле переиспользуемых шагов, ни внутри действия модуля.
-
-**`assert.value` не читается** — только `expected`
-([speq-tms/speq-docs#28](https://github.com/speq-tms/speq-docs/issues/28)).
 
 **`speq validate` проверяет не всё.** Шаги внутри действий модуля и `ref` у ассерта `type: schema` не
 проверяются ([speq-tms/speq-docs#23](https://github.com/speq-tms/speq-docs/issues/23)).
