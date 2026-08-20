@@ -43,7 +43,7 @@ speq run [--speq-root <path>] [--env <name>] [--test <file>|--suite <dir>] [--ta
 
 | Флаг | Поведение |
 | --- | --- |
-| `--speq-root <path>` | Корень `.speq`; по умолчанию определяется по текущему каталогу — см. [project-layout.md](project-layout.md#как-cli-находит-корень) |
+| `--speq-root <path>` | Корень `.speq`; без него ищется от текущего каталога вверх по дереву — см. [project-layout.md](project-layout.md#как-cli-находит-корень) |
 | `--env <name>` | Имя окружения; по умолчанию `defaultEnvironment` из манифеста |
 | `--test <file>` | Запустить один файл теста |
 | `--suite <dir>` | Запустить одну сьюту |
