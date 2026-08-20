@@ -101,8 +101,8 @@ Definition of done:
 
 ## Список детальных документов
 
-- `15_SPEQ_CLI_FEATURE_DATA_GENERATION.md`
-- `16_SPEQ_CLI_FEATURE_FIXTURES_AND_BUILDERS.md`
-- `17_SPEQ_CLI_FEATURE_RETRY_WAITER_POLICY.md`
-- `18_SPEQ_CLI_FEATURE_MODULE_OUTPUTS.md`
-- `19_SPEQ_CLI_FEATURE_PARALLEL_EXECUTION.md`
+- `features/data-generation.md`
+- `features/fixtures-and-builders.md`
+- `features/retry-waiter-policy.md`
+- `features/module-outputs.md`
+- `features/parallel-execution.md`

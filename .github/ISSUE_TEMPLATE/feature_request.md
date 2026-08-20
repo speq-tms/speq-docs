@@ -1,8 +1,8 @@
 ---
 name: Docs request
-about: Request new documentation or clarify existing area
+about: Request new documentation or clarification of an existing area
 title: "[docs] "
-labels: documentation
+labels: ["type/docs", "area/docs"]
 assignees: ""
 ---
 
@@ -12,7 +12,12 @@ What is missing or unclear?
 
 ## Proposed addition
 
-Describe the expected doc section/file.
+Which section of `docs/` should it live in, and what should it cover?
+
+- [ ] `docs/cli/`
+- [ ] `docs/product/`
+- [ ] `docs/architecture/`
+- [ ] `docs/delivery/`
 
 ## Target audience
 

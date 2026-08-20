@@ -104,7 +104,7 @@ Scope:
 
 - Публичный docs/site через GitHub Pages с clean URL `speq-tms`, без custom domain.
 - Для clean org/user Pages URL требуется создать или подтвердить отдельный repository `speq-tms.github.io`. Публикация из `speq-docs` напрямую допустима только если будет принят project pages URL; для `v1.0.0` это не целевое решение.
-- Implementation details зафиксированы в `speq-docs/21_SPEQ_GH_PAGES_IMPLEMENTATION.md`.
+- Implementation details зафиксированы в `speq-docs/docs/delivery/gh-pages.md`.
 - Quickstart для установки CLI и первого запуска.
 - Cookbook для environment YAML в CI.
 - Release/install инструкции для Homebrew, GitHub runner и Windows zip/manual path.

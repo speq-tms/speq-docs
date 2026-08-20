@@ -1,19 +1,23 @@
 ---
 name: Docs bug
-about: Report incorrect or outdated documentation
+about: Documentation is incorrect, outdated, or contradicts the code
 title: "[bug] "
-labels: documentation
+labels: ["type/bug", "area/docs"]
 assignees: ""
 ---
 
 ## Summary
 
-What part of docs is incorrect?
+What is documented incorrectly?
 
 ## Affected document
 
-Path(s):
+Path(s) under `docs/`:
+
+## Actual behavior in code
+
+Where does the code disagree? Reference the repository and file, e.g. `speq-cli/src/cli/run.rs`.
 
 ## Expected content
 
-What should be documented instead?
+What should the document say instead?

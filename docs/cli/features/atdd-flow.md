@@ -255,5 +255,5 @@ Step:
 
 - `status: skip` (явный skip без ATDD-семантики) — отдельная фича следующего milestone.
 - `--atdd` флаг запуска (изменение exit code поведения через CLI-флаг) — не нужен при наличии `status: pending` в DSL.
-- Генерация pending-тестов из Swagger/OpenAPI автоматически — рассматривается в контексте Coverage фичи (doc 23).
+- Генерация pending-тестов из Swagger/OpenAPI автоматически — рассматривается в контексте [Coverage фичи](coverage.md).
 - ATDD-метрики и трекинг динамики pending → passed во времени — post-MVP.

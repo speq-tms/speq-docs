@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: CLI runtime bug
+    url: https://github.com/speq-tms/speq-cli/issues/new
+    about: Report incorrect runtime behavior in speq-cli, not in the documentation.
+  - name: Example / acceptance test issue
+    url: https://github.com/speq-tms/speq-examples/issues/new
+    about: Report a problem with canonical examples or acceptance fixtures.

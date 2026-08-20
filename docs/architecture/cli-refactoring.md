@@ -234,7 +234,7 @@ suite:
 
 ### 2) DSL contracts freeze
 
-Контракт DSL для v1 считается зафиксированным на основе данного документа (`13_SPEQ_REFACTORING.md`):
+Контракт DSL для v1 считается зафиксированным на основе данного документа (`docs/architecture/cli-refactoring.md`):
 
 - `schema` assert (`ref` как основной сценарий, `inline` как опциональный);
 - `modules` + `imports` + `use action`;
