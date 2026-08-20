@@ -1,6 +1,7 @@
 # speq-docs
 
 Canonical product, architecture, and delivery documentation for SPEQ. Focus is `speq-cli`.
+This repository is also the **issue tracker of record for the whole ecosystem**.
 
 ## Responsibilities
 - Keep CLI specs aligned with implemented behavior in `speq-cli`.
@@ -14,11 +15,27 @@ Canonical product, architecture, and delivery documentation for SPEQ. Focus is `
 - `docs/delivery/` — release flow, publishing playbook, gh-pages.
 - `archive/` — superseded documents. Never cite as current behavior.
 
-## Key references
-- `docs/cli/README.md`
-- `docs/cli/phase2-core-expansion.md`
-- `docs/cli/features/*.md`
-- `docs/delivery/release-flow.md`
+## How we work
+
+Full process: `docs/delivery/release-flow.md`. Read it before starting delivery work. Summary:
+
+- **Issues live here**, in `speq-tms/speq-docs`, for every repository in the ecosystem. The target repository
+  is given by the `area/*` label and stated in the issue body.
+- **Milestone title == RC branch name.** Milestone `v1.1.0` means branch `v1.1.0` in each affected repository.
+  `backlog` is not a release and has no branch.
+- **Find the current RC** — GitHub state is authoritative, not any checked-in file:
+
+  ```bash
+  gh api repos/speq-tms/speq-docs/milestones \
+    --jq '.[] | select(.state=="open" and .title != "backlog") | .title'
+  git ls-remote --heads origin 'v*'
+  ```
+
+- **Branch from the RC, never from `main`:** `git switch -c docs/<scope>-<name> origin/<RC>`.
+- **PR base is the RC**, never `main`. One final PR takes the RC into `main`.
+- Inside this repository `Closes #10` works. From another repository it does not — write
+  `Part of speq-tms/speq-docs#10` and close the issue manually after merge.
+- Tick the checkbox in the epic issue when a child issue lands.
 
 ## Invariants
 - Documentation must match implemented behavior; verify against `speq-cli` source before asserting behavior.
