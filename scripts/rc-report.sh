@@ -52,10 +52,13 @@ if [[ -z "$RC" ]]; then
   RC="$candidates"
 fi
 
-milestone_json="$(gh api "repos/$TRACKER/milestones" \
+# `state=all`: a released RC has a closed milestone, and its report must stay
+# regenerable after the release, not only during it.
+milestone_json="$(gh api "repos/$TRACKER/milestones?state=all" \
   --jq "[.[] | select(.title == \"$RC\")] | first // empty")"
 [[ -n "$milestone_json" ]] || { echo "milestone '$RC' not found in $TRACKER" >&2; exit 1; }
 
+milestone_state="$(jq -r '.state' <<<"$milestone_json")"
 open_count="$(jq -r '.open_issues' <<<"$milestone_json")"
 closed_count="$(jq -r '.closed_issues' <<<"$milestone_json")"
 total=$((open_count + closed_count))
@@ -68,6 +71,10 @@ emit() {
   echo
   echo "Progress: **$closed_count of $total** issues closed."
   echo
+  if [[ "$milestone_state" == "closed" ]]; then
+    echo "Milestone \`$RC\` is closed: the release candidate shipped."
+    echo
+  fi
 
   echo "## Scope"
   echo
@@ -83,6 +90,7 @@ emit() {
   echo "## Changes per repository"
   echo
   local any=0
+  participating=()
   for repo in "${ROLLOUT[@]}"; do
     local has_rc prs
     has_rc=""
@@ -95,15 +103,27 @@ emit() {
 
     [[ -z "$has_rc" && -z "$prs" ]] && continue
     any=1
+    participating+=("$repo")
+
+    # The final PR from the RC into `main`. It is what makes a release real, and
+    # it outlives the RC branch, which is usually deleted on merge.
+    local final
+    final="$(gh pr list --repo "$ORG/$repo" --head "$RC" --base main --state merged --limit 1 \
+      --json number,mergedAt \
+      --jq '.[] | "Merged into `main` via [#\(.number)](https://github.com/'"$ORG"'/'"$repo"'/pull/\(.number)) on \(.mergedAt[0:10])."' 2>/dev/null || true)"
 
     echo "### $repo"
     echo
-    if [[ -z "$has_rc" ]]; then
-      echo "No \`$RC\` branch. Nothing staged for this release."
-    elif [[ -z "$prs" ]]; then
+    if [[ -n "$prs" ]]; then
+      echo "$prs"
+    elif [[ -n "$has_rc" ]]; then
       echo "Branch \`$RC\` exists, no PRs merged into it yet."
     else
-      echo "$prs"
+      echo "No \`$RC\` branch. Nothing staged for this release."
+    fi
+    if [[ -n "$final" ]]; then
+      echo
+      echo "$final"
     fi
     echo
   done
@@ -111,12 +131,15 @@ emit() {
 
   echo "## Rollout order"
   echo
-  echo "Merge each RC into \`main\` in this order, and only after every issue on the milestone is closed."
+  if [[ "$milestone_state" == "closed" ]]; then
+    echo "The RC was merged into \`main\` in this order."
+  else
+    echo "Merge each RC into \`main\` in this order, and only after every issue on the milestone is closed."
+  fi
   echo "The order is a dependency chain, not a preference."
   echo
   local n=0
-  for repo in "${ROLLOUT[@]}"; do
-    gh api "repos/$ORG/$repo/branches/$RC" >/dev/null 2>&1 || continue
+  for repo in "${participating[@]}"; do
     n=$((n + 1))
     case "$repo" in
       speq-contracts) why="schemas everything else validates against" ;;
@@ -136,6 +159,11 @@ emit() {
   echo
   echo "## Release gates"
   echo
+  if [[ "$milestone_state" == "closed" ]]; then
+    echo "Applied before the final merge into \`main\`. The evidence is recorded on the milestone's issues,"
+    echo "not here — this file is derived and cannot attest to a human check."
+    echo
+  fi
   echo "- [ ] Every issue on milestone \`$RC\` is closed"
   echo "- [ ] \`cargo build && cargo test\` green in \`speq-cli\`"
   echo "- [ ] \`speq-examples/test-repo-mode-jsonplaceholder\` reports \`\"failed\": 0\`"
