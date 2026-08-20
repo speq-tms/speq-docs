@@ -33,8 +33,9 @@ Full process: `docs/delivery/release-flow.md`. Read it before starting delivery 
 
 - **Branch from the RC, never from `main`:** `git switch -c docs/<scope>-<name> origin/<RC>`.
 - **PR base is the RC**, never `main`. One final PR takes the RC into `main`.
-- Inside this repository `Closes #10` works. From another repository it does not — write
-  `Part of speq-tms/speq-docs#10` and close the issue manually after merge.
+- **Closing keywords never fire in this flow.** `Closes #10` works only when a PR merges into the
+  repository's default branch, and every PR here targets the RC. Write `Part of speq-tms/speq-docs#10`
+  and close the issue manually after merge — in every repository, this one included.
 - Tick the checkbox in the epic issue when a child issue lands.
 
 ## Invariants
