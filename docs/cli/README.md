@@ -62,7 +62,7 @@ speq run [--speq-root <path>] [--env <name>] [--test <file>|--suite <dir>] [--ta
 | Код | Значение |
 | --- | --- |
 | `0` | Успех: нет упавших тестов, нет ошибок, coverage-порог не нарушен |
-| `1` | Есть упавшие тесты/ошибки выполнения, либо coverage ниже `coverage.fail_below` |
+| `1` | Есть упавшие тесты/ошибки выполнения, либо coverage ниже `coverage.failBelow` |
 | `2` | Ошибка валидации, конфигурации или аргументов |
 | `3` | Внутренняя ошибка (сообщение начинается с `internal:`) |
 
@@ -81,10 +81,14 @@ speq run [--speq-root <path>] [--env <name>] [--test <file>|--suite <dir>] [--ta
 | `defaultEnvironment` | Окружение по умолчанию для `run` |
 | `environmentsDir`, `suitesDir`, `reportsDir`, `schemasDir`, `modulesDir`, `fixturesDir` | Раскладка каталогов |
 | `retry` | Политика повторов: `enabled`, `maxAttempts`, `delayMs`, `backoff`, `retryOn` |
-| `coverage` | Contract coverage: `enabled`, `openapi`, `report`, `fail_below` |
+| `coverage` | Contract coverage: `enabled`, `openapi`, `report`, `failBelow` |
 
-> Известная несогласованность: все поля манифеста именуются в `camelCase`, кроме `coverage.fail_below`,
-> который парсится только как `snake_case`. Документ описывает фактическое поведение парсера.
+> `coverage.fail_below` — устаревшее написание, оставленное рабочим: именно оно вышло в v1.0.0. Писать
+> оба варианта в одном манифесте нельзя, это ошибка разбора:
+>
+> ```text
+> invalid manifest <файл>: coverage: duplicate field `failBelow` at line N column M
+> ```
 
 ---
 

@@ -168,20 +168,22 @@ retry:
 | `enabled` | boolean | `false` | Включает анализ; то же делает флаг `--coverage` |
 | `openapi` | строка \| null | `null` | Путь к OpenAPI-документу от корня проекта; переопределяется `--openapi` |
 | `report` | boolean | `false` | Печатать списки покрытых и непокрытых эндпоинтов после прогона |
-| `fail_below` | число \| null | `null` | Завершить прогон с кодом `1`, если покрытие ниже этого процента |
+| `failBelow` | число \| null | `null` | Завершить прогон с кодом `1`, если покрытие ниже этого процента |
 
 ```yaml
 coverage:
   enabled: true
   openapi: "./docs/openapi.yaml"
   report: true
-  fail_below: null
+  failBelow: null
 ```
 
-> **Написание `fail_below`.** Все поля манифеста именуются в `camelCase` — кроме этого. `CoverageConfig`
-> в `src/coverage/mod.rs` не имеет атрибута `rename_all`, поэтому поле читается только как
-> `fail_below`. Написание `failBelow` молча игнорируется, и порог просто не срабатывает.
-> Отслеживается в [speq-tms/speq-docs#1](https://github.com/speq-tms/speq-docs/issues/1).
+> **`fail_below` — устаревшее написание.** Оно вышло в v1.0.0 и осталось рабочим как алиас, поэтому
+> старые манифесты не ломаются. Оба варианта в одном манифесте писать нельзя — это одно и то же поле:
+>
+> ```text
+> invalid manifest <файл>: coverage: duplicate field `failBelow` at line N column M
+> ```
 
 Если `coverage.enabled: true`, но `openapi` не задан ни в манифесте, ни флагом, прогон продолжится с
 предупреждением, а блок `coverage` в `summary.json` просто не появится.
@@ -214,7 +216,7 @@ coverage:
   enabled: true
   openapi: "./docs/openapi.yaml"
   report: true
-  fail_below: null
+  failBelow: null
 ```
 
 ---
