@@ -7,7 +7,8 @@
 исполняется), `src/generator/mod.rs` (генерация). Расхождение этого документа с кодом считается багом
 документа.
 
-Раскладка проекта и манифест — в [project-layout.md](project-layout.md). Команды и коды выхода —
+Если вы здесь впервые, начните с [quickstart.md](quickstart.md) — первый зелёный прогон за несколько
+минут. Раскладка проекта и манифест — в [project-layout.md](project-layout.md). Команды и коды выхода —
 в [README.md](README.md).
 
 ---
@@ -710,6 +711,7 @@ steps: [...]
 
 ## Дальше
 
+- [quickstart.md](quickstart.md) — первый зелёный прогон с чистого каталога.
 - [project-layout.md](project-layout.md) — раскладка проекта и справочник манифеста.
 - [README.md](README.md) — команды, флаги, коды выхода.
 - [features/](features/) — спецификации отдельных фич.
