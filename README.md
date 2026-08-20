@@ -13,14 +13,27 @@ The focus of this repository is `speq-cli`, the single execution engine of the e
 | [docs/product/](docs/product/) | Vision, OSS/Pro boundary, release scope |
 | [docs/architecture/](docs/architecture/) | Target architecture and CLI refactoring plan |
 | [docs/delivery/](docs/delivery/) | Release flow, publishing playbook, GitHub Pages |
+| [docs/delivery/rc/](docs/delivery/rc/) | Generated release-candidate reports — scope, changes, rollout order |
 | [archive/](archive/) | Superseded documents, kept for historical context only |
 
 ## Start here
 
-1. [docs/cli/README.md](docs/cli/README.md) — command surface, exit codes, feature index.
-2. [docs/product/vision.md](docs/product/vision.md) — what SPEQ is and who it is for.
-3. [docs/architecture/target-architecture.md](docs/architecture/target-architecture.md) — how the repositories fit together.
-4. [docs/delivery/release-flow.md](docs/delivery/release-flow.md) — how changes reach `main` and a release tag.
+1. [docs/cli/quickstart.md](docs/cli/quickstart.md) — from an empty directory to a green run.
+2. [docs/cli/project-layout.md](docs/cli/project-layout.md) — what a `.speq` project is, and the manifest reference.
+3. [docs/cli/dsl.md](docs/cli/dsl.md) — the complete YAML test DSL reference.
+4. [docs/cli/README.md](docs/cli/README.md) — command surface, exit codes, feature index.
+5. [docs/product/vision.md](docs/product/vision.md) — what SPEQ is and who it is for.
+6. [docs/architecture/target-architecture.md](docs/architecture/target-architecture.md) — how the repositories fit together.
+7. [docs/delivery/release-flow.md](docs/delivery/release-flow.md) — how changes reach `main` and a release tag.
+
+## CLI reference
+
+| Document | Contains |
+| --- | --- |
+| [quickstart.md](docs/cli/quickstart.md) | First green run from a clean directory |
+| [project-layout.md](docs/cli/project-layout.md) | `.speq` project layout, root discovery, manifest reference |
+| [dsl.md](docs/cli/dsl.md) | Complete YAML test DSL reference |
+| [README.md](docs/cli/README.md) | Commands, flags, exit codes |
 
 ## CLI feature specifications
 
