@@ -27,10 +27,29 @@ ROLLOUT=(speq-contracts speq-cli speq-examples speq-github-runner homebrew-tap s
 RC="${1:-}"
 OUT="${2:-}"
 
+# `rc-report.sh -` means "auto-resolve the RC, write to stdout".
+if [[ "$RC" == "-" ]]; then
+  RC=""
+  OUT="-"
+fi
+
 if [[ -z "$RC" ]]; then
-  RC="$(gh api "repos/$TRACKER/milestones" \
-    --jq '[.[] | select(.state=="open" and .title != "backlog") | .title] | first // empty')"
-  [[ -n "$RC" ]] || { echo "no open RC milestone in $TRACKER; pass one explicitly" >&2; exit 1; }
+  # Exactly one open non-backlog milestone must exist. Picking "the first" of
+  # several silently resolved to an already-released version once; fail loudly
+  # instead, so an ambiguous state is a question rather than a wrong answer.
+  candidates="$(gh api "repos/$TRACKER/milestones" \
+    --jq '.[] | select(.state=="open" and .title != "backlog") | .title')"
+  count="$(grep -c . <<<"${candidates:-}" || true)"
+  if [[ "$count" -eq 0 ]]; then
+    echo "no open RC milestone in $TRACKER. Create one, or pass an RC explicitly." >&2
+    exit 1
+  elif [[ "$count" -gt 1 ]]; then
+    echo "ambiguous: $count open RC milestones in $TRACKER:" >&2
+    sed 's/^/  - /' <<<"$candidates" >&2
+    echo "Close the released one, or pass the intended RC explicitly." >&2
+    exit 1
+  fi
+  RC="$candidates"
 fi
 
 milestone_json="$(gh api "repos/$TRACKER/milestones" \
