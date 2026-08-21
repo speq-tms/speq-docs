@@ -51,6 +51,7 @@ expect:
 name: user lifecycle
 steps:
   - name: create user
+    id: create_user
     request:
       method: POST
       url: "{{ base_url }}/users"
@@ -63,7 +64,7 @@ steps:
     status: pending
     request:
       method: DELETE
-      url: "{{ base_url }}/users/{{ steps.create_user.response.body.id }}"
+      url: "{{ base_url }}/users/{{ create_user.response.body.id }}"
     expect:
       status: 204
 ```

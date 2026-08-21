@@ -35,7 +35,7 @@ coverage:
   enabled: true
   openapi: "./docs/openapi.yaml"   # путь к OpenAPI-спецификации относительно speq.yaml
   report: true                      # включать в summary-отчёт
-  fail_below: null                  # опционально: минимальный порог в % (null = не фейлить)
+  failBelow: null                   # опционально: минимальный порог в % (null = не фейлить)
 ```
 
 Поле `openapi` обязательно при `enabled: true`. Поддерживаются форматы OpenAPI 3.x и Swagger 2.x (JSON и YAML).
@@ -162,20 +162,21 @@ Uncovered-эндпоинты могут быть представлены как
 
 ## Fail threshold
 
-Если задан `fail_below` в конфиге:
+Если задан `failBelow` в конфиге:
 
 ```yaml
 coverage:
-  fail_below: 80
+  failBelow: 80
 ```
 
-CLI завершается с non-zero exit code, если `coverage_pct < fail_below`, выводя:
+CLI завершается с non-zero exit code, если `coverage_pct < failBelow`, выводя:
 
 ```
 Coverage gate failed: 75.0% < 80% threshold
 ```
 
-По умолчанию `fail_below: null` — coverage не влияет на exit code.
+По умолчанию `failBelow: null` — coverage не влияет на exit code. Написание `fail_below`, вышедшее в
+v1.0.0, продолжает работать как алиас.
 
 ---
 
@@ -227,7 +228,7 @@ Coverage органично дополняет ATDD-флоу:
 - Path templates из OpenAPI корректно матчатся против реальных URL тестов.
 - Pending-тесты не вносят вклад в covered-множество.
 - JSON summary содержит поле `coverage` с `total_endpoints`, `covered_endpoints`, `percentage`, `uncovered`.
-- `fail_below` завершает CLI с non-zero exit code при не прохождении порога.
+- `failBelow` завершает CLI с non-zero exit code при не прохождении порога.
 - При невалидном или отсутствующем OpenAPI-файле CLI выводит warning и продолжает без coverage.
 - AT-пример в `speq-examples` демонстрирует coverage с реальным OpenAPI JSONPlaceholder (или mock-спецификацией).
 
