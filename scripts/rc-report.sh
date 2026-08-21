@@ -166,6 +166,7 @@ emit() {
   fi
   echo "- [ ] Every issue on milestone \`$RC\` is closed"
   echo "- [ ] \`cargo build && cargo test\` green in \`speq-cli\`"
+  echo "- [ ] The version in \`speq-cli/Cargo.toml\` equals the tag being published"
   echo "- [ ] \`speq-examples/test-repo-mode-jsonplaceholder\` reports \`\"failed\": 0\`"
   echo "- [ ] Every new feature has an acceptance example"
   echo "- [ ] Documentation matches implemented behavior"
