@@ -91,14 +91,25 @@ steps:
 
 ### Разграничение статусов в репорте
 
-| Статус | Причина | Влияет на exit code |
-|---|---|---|
-| `passed` | Все assertions прошли | Нет |
-| `failed` | Assertion упала или неожиданный HTTP-статус | Да |
-| `error` | Connectivity error, timeout, invalid URL | Да |
-| `pending` | `status: pending` в DSL | Нет |
+| Статус | Причина | Влияет на exit code | В Allure |
+|---|---|---|---|
+| `passed` | Все assertions прошли | Нет | `passed` |
+| `failed` | Ответ пришёл и не совпал с ожиданием | Да | `failed` |
+| `error` | Ответа не было: соединение отклонено, DNS, TLS, таймаут, прокси — либо из спеки не удалось собрать запрос | Да | `broken` |
+| `pending` | `status: pending` в DSL | Нет | `skipped` |
 
 `error` (недоступный эндпоинт) и `failed` (ответ не соответствует ожиданиям) — разные статусы. Это важно в ATDD: тестировщик пишет тест до реализации, и эндпоинт может физически не существовать. Использование `status: pending` позволяет явно отделить "ещё не реализовано" от "сломано".
+
+Различие проводит один вопрос — **ответил ли сервис?** В цикле «пиши тест, потом код» это разница между
+«подними сервис» и «почини код»:
+
+```text
+error   GET http://localhost:8080/orders   request failed: error sending request ... Connection refused
+failed  GET https://api.example.com/orders status assertion failed: expected 200, got 500
+```
+
+Полное описание правила, приоритета `failed` над `error` внутри одного теста и того, как статусы попадают в
+`summary.json`, — в [../README.md](../README.md#статусы-теста).
 
 ### Summary output
 
